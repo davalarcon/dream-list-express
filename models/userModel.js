@@ -9,6 +9,9 @@ const myUserSchema = new Schema(
     email: {type: String, require: true},
     birthday: {type: Date },
     encryptedPassword: { type: String, require: true },
+    products: { },
+    contributionsG: { },
+    contributionsR: { },
 
     googleId: {type: String},
     facebookId: {type: String},
