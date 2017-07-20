@@ -1,17 +1,19 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const LocalStrategy = require('passport-local').Strategy;
 
-const UserModel = require('../models/user-model.js');
+const UserModel = require('../models/user-model');
 
-
+//Sve the user's ID in the bowl (called when user logs in)
 passport.serializeUser((userFromDb, next)=>{
   next(null, userFromDb._id);
 });
 
+
+//retrieve the user's info from the DB with the ID inside the Bowl.
 passport.deserializeUser((idFromBowl, next)=>{
   UserModel.findById(
     idFromBowl,
-
     (err, userFromDb)=>{
       if(err){
         next(err);
@@ -22,33 +24,30 @@ passport.deserializeUser((idFromBowl, next)=>{
   );
 });
 
-//STRATEGIES -----------------------------------
-
-const LocalStrategy = require('passport-local').Strategy;
-
+//email and password login strategy
 passport.use(new LocalStrategy(
   {
-    usernameField: 'loginEmail',
-    passwordField: 'loginPassword',
+    usernameField: 'loginEmail', //sent through AJAX from Angular
+    passwordField: 'loginPassword' //sent through AJAX from Angular
   },
-  (formEmail, formPassword, next)=>{
+  (theEmail, thePassword, next)=> {
     UserModel.findOne(
-      {email: formEmail },
-      (err, userFromDb)=>{
+      { email: theEmail },
+      (err, userFromDb)=> {
         if(err){
           next(err);
           return;
         }
-        if (userFromDb===null){
-          next(null, false);
+        if(userFromDb === null){
+          next(null, false, {message: "Incorrect Email 😕"});
           return;
         }
-        if(bcrypt.compareSync(formPassword, userFromDb.encryptedPassword) === false){
-          next(null, false);
+        if (bcrypt.compareSync(thePassword, userFromDb.encryptedPassword)===false){
+          next (null, false, { message: "Incorrect password 😕"});
           return;
         }
         next(null, userFromDb);
       }
-
-    );
-  }));
+    );//close UserModel.findOne()
+  } // close (theEmail, thePassword, next)
+));

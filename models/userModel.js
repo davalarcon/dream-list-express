@@ -2,23 +2,23 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const myUserSchema = new Schema(
+const myUserSchema = new Schema (
   {
-    name: {type: String, require: true},
-    lastName: {type: String, require: true},
-    email: {type: String, require: true},
-    birthday: {type: Date },
-    encryptedPassword: { type: String, require: true },
-    products: { },
-    contributionsG: { },
-    contributionsR: { },
-
-    googleId: {type: String},
-    facebookId: {type: String},
-    role: { type: String, default: 'Client'},
+    fullName:{
+      type: String,
+      require: true
+    },
+    email: {
+      type: String,
+      require: true
+      },
+    encryptedPassword:{
+      type: String,
+      require: true
+    },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

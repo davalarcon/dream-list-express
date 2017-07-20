@@ -7,6 +7,9 @@ const bodyParser   = require('body-parser');
 const layouts      = require('express-ejs-layouts');
 const session      = require('express-session');
 const passport     = require('passport');
+const cors         = require('cors');
+
+require('dotenv').config();
 
 
 //run all the conde inside passport-config.js
@@ -33,6 +36,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts);
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhosts:4200']
+}));
+
 app.use(session({
 
   secret: 'djfaldjfaldjfalk',
@@ -58,7 +66,11 @@ app.use((req,res,next)=>{
 const index = require('./routes/index');
 app.use('/', index);
 
+const myAuthRoutes = require('./routes/auth-routes');
+app.use('/', myAuthRoutes);
 
+var productsApi = require('./routes/product-api');
+app.use('/api', productsApi);
 
 
 //---------ROUTES HERE 👆👆👆👆👆👆---------------------------------
