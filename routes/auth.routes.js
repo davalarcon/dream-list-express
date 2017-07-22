@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const UserModel = require('../models/user-model');
+const UserModel = require('../models/userModel');
 const router = express.Router();
 const passport = require('passport');
 // POST signup
@@ -25,7 +25,9 @@ router.post('/api/signup', (req, res, next)=>{
         const salt = bcrypt.genSaltSync(10);
         const scrambledPassword = bcrypt.hashSync(req.body.signupPassword, salt);
         const theUser = new UserModel({
-          fullName: req.body.signupFullName,
+          firstName: req.body.signupFirstName,
+          lastName: req.body.signupLastName,
+          birthday: req.body.signupBirthday,
           email: req.body.signupEmail,
           encryptedPassword: scrambledPassword
         });
@@ -110,4 +112,4 @@ router.get('/api/checklogin', (req, res, next) => {
 
 
 
-module.exports = router; 
+module.exports = router;

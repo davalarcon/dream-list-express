@@ -2,7 +2,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 
-const UserModel = require('../models/user-model');
+const UserModel = require('../models/userModel');
 
 //Sve the user's ID in the bowl (called when user logs in)
 passport.serializeUser((userFromDb, next)=>{

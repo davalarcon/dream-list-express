@@ -66,7 +66,7 @@ app.use((req,res,next)=>{
 const index = require('./routes/index');
 app.use('/', index);
 
-const myAuthRoutes = require('./routes/auth-routes');
+const myAuthRoutes = require('./routes/auth.routes');
 app.use('/', myAuthRoutes);
 
 var productsApi = require('./routes/product-api');
