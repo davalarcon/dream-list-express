@@ -60,8 +60,10 @@ router.post('/api/signup', (req, res, next)=>{
 //this is different b/c passport.authenticate() redirects
 //(APIs normally shouldn't redirect)
 router.post('/api/login', (req, res, next)=>{
+  console.log("Im in Express first level auth routes");
   const authenticateFunction =
     passport.authenticate('local', (err, theUser, extraInfo)=>{
+      console.log("Im in Express passport authenticate");
       //Errors prevented us from deciding if login was successful or not.
       if(err){
         res.status(500).json({message: 'Unknown login error 😕'});
@@ -74,6 +76,7 @@ router.post('/api/login', (req, res, next)=>{
       }
       //login successful, save them in the session.
       req.login(theUser, (err)=>{
+        console.log("Im in Express login");
         if(err){
           res.status(500).json({message: 'Session save error 😕'});
           return;

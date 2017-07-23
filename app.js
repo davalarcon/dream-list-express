@@ -10,7 +10,12 @@ const passport     = require('passport');
 const cors         = require('cors');
 
 require('dotenv').config();
+const app = express();
 
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:4200']
+}));
 
 //run all the conde inside passport-config.js
 require('./config/passport-config.js');
@@ -18,7 +23,6 @@ require('./config/passport-config.js');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
 
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,10 +40,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts);
 
-app.use(cors({
-  credentials: true,
-  origin: ['http://localhosts:4200']
-}));
 
 app.use(session({
 
