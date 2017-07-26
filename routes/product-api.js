@@ -14,6 +14,7 @@ router.get('/products', (req, res, next)=>{
   });
 });
 
+// ROUTE TO POST THE NEW GIFT INTO MONGO DB
 
 router.post('/products', (req, res, next)=>{
   const theProduct = new ProductModel({
@@ -39,6 +40,24 @@ router.post('/products', (req, res, next)=>{
   });
 });
 
+//ROUTE TO POPULATE CURRENT USER GIFTS
+
+router.get('/products', (req, res, next)=>{
+  console.log('Im in router.get');
+  if(!req.user){
+    res.status(401).json({message: 'Not the user 👎'});
+  }
+  ProductModel
+      .find({ownerId: req.user._id})
+      .populate('ownerId', {encryptedPassword: 0})
+      .exec((err, usersProducts)=>{
+        if(err){
+          res.status(500).json({message: 'Gifts find went 👎'});
+          return;
+        }
+        res.status(200).json(usersProducts);
+      });
+});
 
 
 router.get('/products/:myId/delete', (req, res, next)=>{
