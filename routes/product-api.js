@@ -17,17 +17,20 @@ router.get('/products', (req, res, next)=>{
 
 router.post('/products', (req, res, next)=>{
   const theProduct = new ProductModel({
-    name: req.body.name,
-    brand: req.body.brand,
-    model: req.body.model,
-    description: req.body.description,
-    price: req.body.price,
+    name: req.body.giftName,
+    sku: req.body.giftSku,
+    type: req.body.giftType,
+    price: req.body.giftPrice,
+    description: req.body.giftDescription,
+    image: req.body.giftImage,
+    ownerId: req.user._id,
   });
   theProduct.save((err)=>{
     if(err){
       res.json(err);
       return;
     }
+    theProduct.ownerId= req.user;
 
     res.json({
       message: "New Product created",
