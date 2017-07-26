@@ -42,8 +42,7 @@ router.post('/products', (req, res, next)=>{
 
 //ROUTE TO POPULATE CURRENT USER GIFTS
 
-router.get('/products', (req, res, next)=>{
-  console.log('Im in router.get');
+router.get('/products/user', (req, res, next)=>{
   if(!req.user){
     res.status(401).json({message: 'Not the user 👎'});
   }
