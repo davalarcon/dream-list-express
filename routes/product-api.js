@@ -59,6 +59,35 @@ router.get('/products/user', (req, res, next)=>{
 });
 
 
+
+router.get('products/details/:myId', (req, res, next)=>{
+  ProductModel
+    .findById(
+    req.params.myId,
+      (err, theGift)=>{
+        if(err){
+          res.status(500).json({message: 'Gift find went 👎'});
+          return;
+        }
+        res.status(200).json(theGift);
+      });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get('/products/:myId/delete', (req, res, next)=>{
   ProductModel.findByIdAndRemove(
     req.params.myId,
