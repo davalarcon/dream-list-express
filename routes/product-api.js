@@ -58,6 +58,32 @@ router.get('/products/user', (req, res, next)=>{
       });
 });
 
+// ROUTE TO UPDATE CONTRIBUTION AMOUNT
+
+router.patch('/products/:Id/update', (req, res, next)=>{
+  console.log(req.params.Id, req.body.newTotal);
+  console.log("blaaaaah");
+  ProductModel.findByIdAndUpdate(
+    req.params.Id,
+    {
+      // $push:{contributorsId: req.body.contributors},
+      $set:{totalContribution: req.body.newTotal}
+      //$set is to update the totalContribution
+
+    },
+    (err, productFromDb)=>{
+        if(err){
+        return res.status(500).json(err);
+        }
+        return res.status(202).json(productFromDb);
+    }
+  );
+});
+
+
+
+
+
 
 
 router.get('products/details/:myId', (req, res, next)=>{
@@ -120,24 +146,7 @@ router.get('/products/:myId/edit', (req, res, next)=>{
   );
 });
 
-router.post('/products/:myId/update', (req, res, next)=>{
-  ProductModel.findByIdAndUpdate(
-    req.params.myId,
-    {
-      name: req.body.name,
-      brand: req.body.brand,
-      model: req.body.model,
-      description: req.body.description,
-      price: req.body.price,
-    },
-    (err, productFromDb)=>{
-        if(err){
-          res.json(err);
-          return;
-        }
-    }
-  );
-});
+
 
 
 

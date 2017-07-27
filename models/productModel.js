@@ -16,8 +16,8 @@ const myProductSchema = new Schema(
       require: true,
       ref: 'User'
     },
-    contributorsId: {type: Number, require: true},
-    totalContribution: {type: Number, require: true},
+    contributorsId: [{type: Number, require: true}],
+    totalContribution: {type: Number, default:0, require: true},
   }
 );
 
