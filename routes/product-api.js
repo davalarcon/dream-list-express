@@ -80,7 +80,19 @@ router.patch('/products/:Id/update', (req, res, next)=>{
   );
 });
 
+//ROUTE TO DELETE PRODUCT
 
+router.get('/products/:Id/delete', (req, res, next)=>{
+  ProductModel.findByIdAndRemove(
+    req.params.Id,
+    (err, productFromDb)=>{
+      if(err){
+        return res.status(500).json(err);
+      }
+      return res.status(202).json(productFromDb);
+    }
+  );
+});
 
 
 
